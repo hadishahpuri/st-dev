@@ -1,0 +1,75 @@
+version: '3'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    image: php:8.2-fpm
+    container_name: app
+    restart: unless-stopped
+    tty: true
+    environment:
+      SERVICE_NAME: app
+      SERVICE_TAGS: dev
+    working_dir: /var/www
+    volumes:
+      - ./backend/:/var/www
+      - ./docker_config/dev/php/custom.ini:/usr/local/etc/php/conf.d/custom.ini
+      - ./.env/:/var/www/.env
+    networks:
+      - app-network
+
+  nginx:
+    image: nginx
+    container_name: nginx
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./backend/:/var/www
+      - ./docker_config/dev/nginx/conf.d/:/etc/nginx/conf.d/
+    networks:
+      - app-network
+
+  db:
+    image: mariadb
+    container_name: db
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: "${DB_DATABASE}"
+      MYSQL_ROOT_PASSWORD: root
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      - ./docker/mysql-data:/var/lib/mysql/
+      - ./docker_config/dev/mariadb/my.cnf:/etc/mysql/my.cnf
+    networks:
+      - app-network
+
+  phpmyadmin:
+    image: phpmyadmin
+    container_name: phpmyadmin
+    env_file:
+      - .env
+    environment:
+      - TZ=Asia/Tehran
+      - PMA_HOST=db
+      - PMA_ARBITRARY=1
+      - UPLOAD_LIMIT=300M
+    ports:
+      - "8060:80"
+    networks:
+      - app-network
+    depends_on:
+      - db
+
+networks:
+  app-network:
+    driver: bridge
