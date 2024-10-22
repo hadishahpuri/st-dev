@@ -21,7 +21,7 @@ class RoomMovieSeeder extends Seeder
         $now = now();
 
         foreach ($rooms as $room) {
-            for ($i = 0; $i < 3; $i++) {
+            for ($i = 0; $i < 4; $i++) {
                 $movie = $movies[$i] ?? null;
                 $showtime = $times[$i];
                 if ($movie) {
