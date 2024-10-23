@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "@inertiajs/inertia-react": "^0.8.1",
+    "@inertiajs/react": "^1.2.0",
+    "@vitejs/plugin-react": "^4.3.3",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  }
+}
