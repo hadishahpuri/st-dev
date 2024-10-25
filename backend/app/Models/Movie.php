@@ -10,7 +10,7 @@ class Movie extends Model
         return $this->hasMany(Schedule::class);
     }
 
-    public function filledSeats() {
+    public function occupiedSeats() {
         return $this->hasMany(UserSeat::class, 'movie_id');
     }
 }

@@ -3,11 +3,15 @@ export default function Rooms({ rooms }) {
     <>
       <h1>All rooms in this cinema !!!!!!</h1>
       <hr />
-      {rooms && rooms.map((item) => (
-        <div key={item.id}>
-          <h2>{item.title}</h2>
-        </div>
-      ))}
+      <div className="flex">
+        {rooms && rooms.map((item) => (
+          <div key={item.id}>
+            <a href={"/rooms/" + item.id}>
+              <h2>{item.name}</h2>
+            </a>
+          </div>
+        ))}
+      </div>
     </>
   );
 }
