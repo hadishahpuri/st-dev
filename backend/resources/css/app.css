@@ -33,3 +33,25 @@ h3 {
         background-color: transparent;
     }
 }
+
+.shadow {
+    -webkit-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+}
+
+.room {
+    background-color: #e3e3e3;
+    padding: 36px;
+    border-radius: 8px;
+}
+
+.header {
+    background-color: #78787812;
+    text-align: center;
+}
+
+.movie {
+    background-color: #e3e3e3;
+    border-radius: 8px;
+}

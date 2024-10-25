@@ -45,11 +45,13 @@ export default function Movie(
 
     return (
         <>
-            <img src={movie.poster} className="w-[23]" />
-            <h1>{movie.name}</h1>
-            <h3>
-                Showtime: <span>{scheule.showtime}</span>
-            </h3>
+            <div className="text-center">
+                <img src={movie.poster} className="w-[22rem]" />
+                <h1>{movie.name}</h1>
+                <h3>
+                    Showtime: <span>{scheule.showtime}</span>
+                </h3>
+            </div>
             <hr />
             <SeatMatrix
                 rowsNumber={scheule.room.rows_number}
