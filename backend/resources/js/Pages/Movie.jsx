@@ -9,7 +9,7 @@ export default function Movie(
 ) {
     const [selectedSeats, setSelectedSeats] = useState([]);
 
-    const ReseveSelectedSeats = () => {
+    const ReserveSelectedSeats = () => {
         if (selectedSeats.length === 0) {
             return false;
         }
@@ -64,9 +64,9 @@ export default function Movie(
             <div className="text-center">
                 <button
                     className="btn rounded bg-gray-200/80 p-4 mt-3"
-                    onClick={ReseveSelectedSeats}
+                    onClick={ReserveSelectedSeats}
                 >
-                    Reseve {selectedSeats.length} seats
+                    Reserve {selectedSeats.length} seats
                 </button>
             </div>
         </>
