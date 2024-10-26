@@ -22,14 +22,8 @@ class ViewsController extends Controller
     }
 
     public function movie(int $room_id, int $movie_id) {
-        $movie = Movie::with(['occupiedSeats' => fn ($query) =>
-                $query->whereDate('showtime', now()->format('Y-m-d'))
-                    ->where('room_id', $room_id)
-                    ->where('movie_id', $movie_id)
-        ])->where('id', $movie_id)->first();
-
-        $occupiedSeats = $movie->occupiedSeats->map->only('seat_number', 'row_number')->values()->toArray();
-        $occupiedSeats = array_map(fn ($item) => "{$item['row_number']}_{$item['seat_number']}", $occupiedSeats);
+        $movie = Movie::query()->where('id', $movie_id)->first();
+        $occupiedSeats = $movie->getOccupiedSeats($room_id);
 
         $schedule = Schedule::with('room')
             ->where('room_id', $room_id)

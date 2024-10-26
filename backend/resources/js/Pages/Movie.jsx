@@ -1,7 +1,7 @@
 import { useState } from "react";
 import SeatMatrix from "./Seat/SeatMatrix.jsx";
 import axios from "axios";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 
 export default function Movie(
@@ -17,7 +17,6 @@ export default function Movie(
             schedule_id: scheule.id,
             selectedSeats: selectedSeats,
         }).then((res) => {
-            alert("Successfully reserved");
             toast.success("Successfully reserved", {
                 position: "bottom-left",
                 autoClose: 5000,
@@ -28,23 +27,24 @@ export default function Movie(
                 progress: undefined,
                 theme: "light",
             });
-            location.reload();
-        }).catch((err) => {
-            alert(err.error ?? "Internal server error!");
-            toast.error(err.error ?? "Internal server error!", {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                progress: undefined,
-                theme: "light",
+            return res.data.occupiedSeats;
+        }).then((data) => setSelectedSeats(data))
+            .catch((err) => {
+                toast.error(err.response?.data?.error ?? "Internal server error!", {
+                    position: "bottom-left",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    progress: undefined,
+                    theme: "light",
+                });
             });
-        });
     };
 
     return (
         <>
+            <ToastContainer />
             <div className="text-center">
                 <img src={movie.poster} className="w-[22rem]" />
                 <h1>{movie.name}</h1>

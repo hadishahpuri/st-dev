@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Exceptions\ApiException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MovieRequests\ReserveSeatRequest;
+use App\Models\Movie;
 use App\Models\Schedule;
 use App\Models\User;
 use App\Models\UserSeat;
@@ -28,7 +29,11 @@ class RoomsController extends Controller
         }
 
         UserSeat::query()->insert($userSeats);
-        return response()->json(['status' => true]);
+
+        $movie = Movie::query()->find($schedule->movie_id);
+        $occupiedSeats = $movie->getOccupiedSeats($schedule->room_id);
+
+        return response()->json(['occupiedSeats' => $occupiedSeats]);
     }
 
     private function validateSeatSelection(Schedule $schedule, array $selected_seats): array {

@@ -19,7 +19,6 @@
 
 ### Things that could be done! (But I didn't have the time)
 
-- Use React Toastify instead of alert!
 - Use Shadcn instead of Tailwind for better theme structure
 - Add cancel reservation ability
 - Add users login to handle multiple user reservations (Currently a default user is beeing used)
